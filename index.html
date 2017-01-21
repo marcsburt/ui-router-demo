@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <script src="//code.angularjs.org/1.6.1/angular.min.js"></script>
+    <script src="//unpkg.com/angular-ui-router@1.0.0-rc.1/release/angular-ui-router.js"></script> 
+    <script src="app.js"></script>
+
+    <style>.active { color: red; font-weight: bold; }</style>
+  </head>
+
+  <body ng-app="helloworld">
+    <a ui-sref="hello" ui-sref-active="active">Hello</a>
+    <a ui-sref="about" ui-sref-active="active">About</a>
+    <a ui-sref="people" ui-sref-active="active">People</a>
+
+    <ui-view></ui-view>
+  </body>
+</html>
