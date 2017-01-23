@@ -37,15 +37,17 @@ myApp.config(function($stateProvider) {
 
 	var personState = {
 
-		name: 'person',
-		url: '/people/{personId}',
+		name: 'people.person',
+		url: '/{personId}',
 		component: 'person',
 		resolve: {
 
-			person: function(myService, $transition$){
-					console.log(myService.getPerson($transition$.params().personId).id);
-
-					return myService.getPerson($transition$.params().personId);
+			person: function(people, $stateParams) {
+					console.log(people);
+					console.log($stateParams);
+					return people.find(function(person){
+						return person.id === $stateParams.personId;
+					})
 			
 			}
 		}
@@ -79,15 +81,7 @@ myApp.component('test', {
 myApp.component('people', {
 	bindings: {people: '<'},
 
-	template:'<h3>Some people:</h3>' +
-            '<ul>' +
-            '  <li ng-repeat="person in $ctrl.people">' +
-            '    <a ui-sref="person({ personId: person.id })">' +
-            '      {{person.name}}<br>' +
-            '      {{person.id}}' +
-            '    </a>' +
-            '  </li>' +
-            '</ul>'
+	templateUrl: 'people.html'
 
 })
 
@@ -95,7 +89,7 @@ myApp.component('person', {
 
 	bindings: {person: '<'},
 
-	template: '<h3> {{ $ctrl.person.id }} </h3>'
+	templateUrl: 'person.html'
 })
 
 //SERVICES
@@ -139,12 +133,11 @@ myApp.service('myService', function(){
     }
 
     self.getPerson = function(person) {
-    	
+
     		console.log (self.people[person])
     		return self.people[person];
     
     }
-
 
 
 })
